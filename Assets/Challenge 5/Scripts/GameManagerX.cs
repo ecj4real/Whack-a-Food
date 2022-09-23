@@ -9,6 +9,7 @@ public class GameManagerX : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI timeText;
     public GameObject titleScreen;
     public Button restartButton; 
 
@@ -17,6 +18,7 @@ public class GameManagerX : MonoBehaviour
     private int score;
     private float spawnRate = 1.5f;
     public bool isGameActive;
+    private float timeRemaining = 60;
 
     private float spaceBetweenSquares = 2.5f; 
     private float minValueX = -3.75f; //  x value of the center of the left-most square
@@ -85,6 +87,18 @@ public class GameManagerX : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void Update()
+    {
+        if (timeRemaining > 0 && isGameActive)
+        {
+            timeRemaining -= Time.deltaTime;
+            timeText.text = "Time: " + ((int)timeRemaining);
+        } else if(timeRemaining <= 0 && isGameActive)
+        {
+            GameOver();
+        }
     }
 
 }
